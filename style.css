@@ -1,0 +1,28 @@
+#companiesList{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+}
+
+article{
+    background: rgb(247, 225, 30);
+    width: 300px;
+    height: 200px;
+    margin: 20px 20px;
+    
+}
+
+h2{
+    display: block;
+    background: rgb(63, 207, 70);
+    font-size: 20px;
+    text-align: center;
+}
+
+p{
+    display: block;
+    background: rgb(0, 238, 255);
+    font-size: 15px;
+    padding: 20px 10px;
+}
