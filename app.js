@@ -1,22 +1,26 @@
 /*
-De la cual se conocen los siguientes endpoints:
-▪ GET /api/Company
-▪ GET /api/Employee
-▪ POST /api/Employee
-▪ DELETE /api/Employee/employeeId
-https://utn-lubnan-api-1.herokuapp.com/
+    Conocen los siguientes endpoints:
+    ▪ GET /api/Company
+    ▪ GET /api/Employee
+    ▪ POST /api/Employee
+    ▪ DELETE /api/Employee/employeeId
+    https://utn-lubnan-api-1.herokuapp.com/
+    https://utn-lubnan-api-1.herokuapp.com/index.html
 
-https://utn-lubnan-api-1.herokuapp.com/index.html
+    // Atributos de Company
+    {
+        "companyId": 1,
+        "name": "Muxo"
+    }
 
-
-get
-
-{
-    "companyId": 1,
-    "name": "Muxo"
-  },
-
-
+    // Atributos de Employee
+    {
+        "employeeId": 1,
+        "companyId": 10,
+        "firstName": "Isaak",
+        "lastName": "Sterland",
+        "email": "isterland0@blinklist.com"
+    }
 */
 
 const urlCompany = 'https://utn-lubnan-api-1.herokuapp.com/api/Company'
@@ -97,15 +101,7 @@ let getEmployeeList = function(url){
 
 
 getEmployeeList(urlEmployee)
-    /*
-     {
-        "employeeId": 1,
-        "companyId": 10,
-        "firstName": "Isaak",
-        "lastName": "Sterland",
-        "email": "isterland0@blinklist.com"
-    },
-    */
+   
     .then((response)=>{
         console.log(response);
         /*
@@ -154,7 +150,7 @@ let postNewEmployee = function(newEmplooyee, url){
 
 // creo un objeto empleado nuevo
 let newEmplooyee = {
-    "employeeId": 19998,
+    "employeeId": 19998, // este en este caso es opcional
     "companyId": 1,
     "firstName": "Alex",
     "lastName": "Echeverria",
