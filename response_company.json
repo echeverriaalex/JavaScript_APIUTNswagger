@@ -1,0 +1,82 @@
+[
+  {
+    "companyId": 1,
+    "name": "Muxo"
+  },
+  {
+    "companyId": 2,
+    "name": "Abata"
+  },
+  {
+    "companyId": 3,
+    "name": "Abatz"
+  },
+  {
+    "companyId": 4,
+    "name": "Jayo"
+  },
+  {
+    "companyId": 5,
+    "name": "Skimia"
+  },
+  {
+    "companyId": 6,
+    "name": "Avamba"
+  },
+  {
+    "companyId": 7,
+    "name": "Vimbo"
+  },
+  {
+    "companyId": 8,
+    "name": "Jabbertype"
+  },
+  {
+    "companyId": 9,
+    "name": "Voomm"
+  },
+  {
+    "companyId": 10,
+    "name": "Thoughtbridge"
+  },
+  {
+    "companyId": 11,
+    "name": "Lazz"
+  },
+  {
+    "companyId": 12,
+    "name": "Zoonoodle"
+  },
+  {
+    "companyId": 13,
+    "name": "Youspan"
+  },
+  {
+    "companyId": 14,
+    "name": "Gigazoom"
+  },
+  {
+    "companyId": 15,
+    "name": "Voomm"
+  },
+  {
+    "companyId": 16,
+    "name": "Pixonyx"
+  },
+  {
+    "companyId": 17,
+    "name": "Twitterworks"
+  },
+  {
+    "companyId": 18,
+    "name": "Devify"
+  },
+  {
+    "companyId": 19,
+    "name": "Reallinks"
+  },
+  {
+    "companyId": 20,
+    "name": "Kwimbee"
+  }
+]
