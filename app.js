@@ -48,31 +48,45 @@ let getCompanyList = function(url){
 
 let companiesList = document.getElementById('companiesList');
 
+// PREGUNTAR SI ES UNA BUENA PRACTICA DE PROGRAMACION HACER ESTO
+// Encierro toda la funcion getCompanyList y su procesamiento 
+// de la promise en otra funcion para simplificar el codigo
+// cada vez que quiera traer y mostrar las empresas
+function showListCompany(){
+    getCompanyList(urlCompany)
+        .then((response)=>{
+            //console.log(response);
+            response.forEach(element => {
+                
+                let article = document.createElement('article')
+                article.setAttribute("id", element['companyId'])
+                let h2 = document.createElement('h2')
+                h2.innerHTML = element['name']
+                let p = document.createElement('p')
+                p.setAttribute("class", "idCompany")
+                p.innerHTML = 'ID ' +  element['companyId']
 
-getCompanyList(urlCompany)
-    .then((response)=>{
-        console.log(response);     
+                let countEmployee = document.createElement('input')
+                countEmployee.setAttribute("type", "number");
+                countEmployee.value = 0;
 
-        response.forEach(element => {
-            
-            let article = document.createElement('article')
+                article.append(h2)
+                article.append(countEmployee)
+                article.append(p)
+                
+                companiesList.append(article)
+            });
+        })
+        .catch((error)=>{
+            console.log(Error(error));
             let h2 = document.createElement('h2')
-            h2.innerHTML = element['name']
-            let p = document.createElement('p')
-            p.innerHTML = 'ID ' +  element['companyId']
-                      
-            article.append(h2)
-            article.append(p)
-            
-            companiesList.append(article)
-        });
-    })
-    .catch((error)=>{
-        console.log(Error(error));
-        let h2 = document.createElement('h2')
-        h2.innerHTML = 'Not found companies or ' + error;
-        companiesList.append(h2)
-    })
+            h2.innerHTML = 'Not found companies or ' + error;
+            companiesList.append(h2)
+        })
+}
+
+showListCompany();
+
 
 // ---------------------------------------------------------------------------------------
 
@@ -99,30 +113,64 @@ let getEmployeeList = function(url){
     })
 }
 
+// PREGUNTAR SI ES UNA BUENA PRACTICA DE PROGRAMACION HACER ESTO
+// Encierro toda la funcion showEmployeeList y su procesamiento 
+// de la promise en otra funcion para simplificar el codigo
+// cada vez que quiera traer y mostrar los empleados
+function showEmployeeList(){
+    getEmployeeList(urlEmployee)
+        .then((response)=>{
+            //console.log(response);
+            
+            let count = 0;
+            
+            response.forEach(element => {
 
-getEmployeeList(urlEmployee)
-   
-    .then((response)=>{
-        console.log(response);
-        /*
-        response.forEach(element => {
-            let article = document.createElement('article')
+                
+                let company = document.getElementById(element["companyId"])
+                count ++;
+                let countEmployee = document.getElementById("countEmployeed")
+                //countEmployee.value = 10;
+
+                let div = document.createElement('div')
+                div.setAttribute("class", "employee")
+
+                let pCompanyId = document.createElement('p')
+                pCompanyId.innerHTML = "ID company: " + element["companyId"]
+                div.append(pCompanyId)
+
+                let pEmployeeId = document.createElement('p')
+                pEmployeeId.innerHTML = "ID employee: " + element["employeeId"]
+                div.append(pEmployeeId)                
+                
+                let pFirstName = document.createElement('p')
+                pFirstName.innerHTML = "Name: " + element["firstName"]
+                div.append(pFirstName)
+                
+                let pLastName = document.createElement('p')
+                pLastName.innerHTML = "Lastname: " + element["lastName"]
+                div.append(pLastName)
+                
+                let pEmail = document.createElement('p')
+                pEmail.innerHTML = "Email: " + element["email"]
+                div.append(pEmail)
+
+                company.append(div)
+
+            });
+            
+
+        })
+        .catch((error)=>{
+            console.log(Error(error));
             let h2 = document.createElement('h2')
-            h2.innerHTML = element['name']
-            let p = document.createElement('p')
-            p.innerHTML = 'ID ' +  element['companyId']   
-            article.append(h2)
-            article.append(p)
-            companiesList.append(article)
-        });
-        */
-    })
-    .catch((error)=>{
-        console.log(Error(error));
-        let h2 = document.createElement('h2')
-        h2.innerHTML = 'Not found employee or ' + error;
-        companiesList.append(h2)
-    })
+            h2.innerHTML = 'Not found employee or ' + error;
+            companiesList.append(h2)
+        })
+}
+
+showEmployeeList();
+
 
 // ------------------------------------------------------------------------------------------------------
 
@@ -148,8 +196,8 @@ let postNewEmployee = function(newEmplooyee, url){
 }
 
 
-// creo un objeto empleado nuevo
-let newEmplooyee = {
+// creo nuevos objetos empleados para enviarlos a la API
+let newEmplooyee1 = {
     "employeeId": 19998, // este en este caso es opcional
     "companyId": 1,
     "firstName": "Alex",
@@ -157,22 +205,135 @@ let newEmplooyee = {
     "email": "alexnahuelecheverria@gmail.com"
 }
 
+let newEmplooyee2 = {
+    "employeeId": 19998, // este en este caso es opcional
+    "companyId": 5,
+    "firstName": "Pepe",
+    "lastName": "Argento",
+    "email": "racingclubavellaneda@gmail.com"
+}
 
-// mando por post a crear un nuevo empleado
-postNewEmployee(newEmplooyee, urlEmployee)
-    .then((response)=>{
-        console.log("Mande un nuevo employee para probar si entra");
-        console.log(response);
-    })
-    .catch((error)=>{
-        console.log(Error(error));
-        let h2 = document.createElement('h2')
-        h2.innerHTML = 'Cannot register new employee or ' + error;
-        companiesList.append(h2)
-    })
+let newEmplooyee3 = {
+    "employeeId": 19998, // este en este caso es opcional
+    "companyId": 7,
+    "firstName": "Leonardo",
+    "lastName": "DiCaprio",
+    "email": "tictanic4ever@gmail.com"
+}
+
+
+async function registerNewEmployeeAsync(newEmplooyee){
+    // mando por post a crear un nuevo empleado
+    await postNewEmployee(newEmplooyee, urlEmployee)
+        .then((response)=>{
+            console.log(newEmplooyee.firstName + " was registered asynchronously");
+            console.log(response);
+        })
+        .catch((error)=>{
+            console.log(Error(error));
+            let h2 = document.createElement('h2')
+            h2.innerHTML = 'Cannot register new employee or ' + error;
+            companiesList.append(h2)
+        })
+}
+
+/*
+ERROR que me salio experimentando 
+Uncaught SyntaxError: await is only valid in async functions and 
+the top level bodies of modules (at app.js:206:1)
+yo ponia asi:
+
+await registerNewEmployee(newEmplooyee1);
+
+pero dentro de esa funcion no ponia await
+
+salia error porque no ponia await postNewEmployee dentro de 
+la funcion registerNewEmployee, si pongo async afuera, adentro tengo 
+que poner await 
+*/
+
+console.log("\n ---> Vamos a probar el orden con Async y Await\n\n");
+
+registerNewEmployeeAsync(newEmplooyee1);
+console.log(newEmplooyee1.firstName + " was sent to Asyn");
+
+registerNewEmployeeAsync(newEmplooyee2);
+console.log(newEmplooyee2.firstName + " was sent to Asyn");
+
+registerNewEmployeeAsync(newEmplooyee3);
+console.log(newEmplooyee3.firstName + " was sent to Asyn");
+
+console.log("\n ---- Fin de la prueba en orden con Async y Await\n\n\n");
+
+showEmployeeList();
+
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+let newEmplooyee4 = {
+    "employeeId": 19998, // este en este caso es opcional
+    "companyId": 9,
+    "firstName": "Lionel",
+    "lastName": "Messi",
+    "email": "lio_10_messi@icloud.com"
+}
+
+let newEmplooyee5 = {
+    "employeeId": 19998, // este en este caso es opcional
+    "companyId": 3,
+    "firstName": "Fideo",
+    "lastName": "Di Maria",
+    "email": "fideo_en_su_salsa@icloud.com"
+}
+
+let newEmplooyee6 = {
+    "employeeId": 19998, // este en este caso es opcional
+    "companyId": 6,
+    "firstName": "Diego",
+    "lastName": "Maradona",
+    "email": "diegote_dios@icloud.com"
+}
+
+
+function registerNewEmployee(newEmplooyee){
+    // mando por post a crear un nuevo empleado
+    postNewEmployee(newEmplooyee, urlEmployee)
+        .then((response)=>{
+            console.log(newEmplooyee.firstName + " was registered.");
+            console.log(response);
+        })
+        .catch((error)=>{
+            console.log(Error(error));
+            let h2 = document.createElement('h2')
+            h2.innerHTML = 'Cannot register new employee or ' + error;
+            companiesList.append(h2)
+        })
+}
+
+console.log("\n $---> Vamos a probar el orden SIN Async y Await");
+registerNewEmployee(newEmplooyee4);
+console.log(newEmplooyee4.firstName + " was sent");
+
+registerNewEmployee(newEmplooyee5);
+console.log(newEmplooyee5.firstName + " was sent");
+
+registerNewEmployee(newEmplooyee6);
+console.log(newEmplooyee6.firstName + " was sent");
+
+console.log("\n $---> Fin de la prueba en orden SIN Async y Await\n\n\n");
+
+showEmployeeList();
+
+
+
+
+
+
 
 // me traigo todos los empleados para ver como quedo registrado
 // el nuevo empleado que mande a crear
+/*
 getEmployeeList(urlEmployee)
     .then((response)=>{
         console.log(response);
@@ -183,3 +344,4 @@ getEmployeeList(urlEmployee)
         h2.innerHTML = 'Not found employee or ' + error;
         companiesList.append(h2)
     })
+*/
