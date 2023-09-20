@@ -68,6 +68,7 @@ function showListCompany(){
 
                 let countEmployee = document.createElement('input')
                 countEmployee.setAttribute("type", "number");
+                countEmployee.setAttribute("id", "countEmployeed" + element['companyId']);
                 countEmployee.value = 0;
 
                 article.append(h2)
@@ -121,16 +122,8 @@ function showEmployeeList(){
     getEmployeeList(urlEmployee)
         .then((response)=>{
             //console.log(response);
-            
-            let count = 0;
-            
             response.forEach(element => {
-
-                
-                let company = document.getElementById(element["companyId"])
-                count ++;
-                let countEmployee = document.getElementById("countEmployeed")
-                //countEmployee.value = 10;
+                let company = document.getElementById(element["companyId"])                
 
                 let div = document.createElement('div')
                 div.setAttribute("class", "employee")
@@ -154,12 +147,14 @@ function showEmployeeList(){
                 let pEmail = document.createElement('p')
                 pEmail.innerHTML = "Email: " + element["email"]
                 div.append(pEmail)
+                
+                let countEmployee = document.getElementById("countEmployeed" + element['companyId'])
+                countEmployee.value = parseInt(countEmployee.value) + 1;
+                console.log("Count ---> " + countEmployee);
 
                 company.append(div)
 
             });
-            
-
         })
         .catch((error)=>{
             console.log(Error(error));
