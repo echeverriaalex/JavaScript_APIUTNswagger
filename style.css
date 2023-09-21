@@ -29,7 +29,7 @@ h2{
     font-weight: bolder;
 }
 
-.employee{
+.info-employee{
     background: rgb(9, 142, 231);
     margin: 20px 20px;
     height: 150px;
@@ -37,9 +37,18 @@ h2{
     border-radius: 20px;
 }
 
+
+
 p{
     display: block;
     font-size: 15px;
     margin: 5px 5px;
     color: white;
+}
+
+.employees, .count{
+    display: inline;
+    font-size: 25px;
+    /* background: rgb(94, 255, 0);
+    width: 50%;*/
 }
