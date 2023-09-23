@@ -58,37 +58,52 @@ async function showListCompany(){
             //console.log(response);
             response.forEach(element => {
                 
-                let article = document.createElement('article')
-                article.setAttribute("id", element['companyId'])
+                let div = document.createElement('div')
+                div.setAttribute("id", element['companyId'])
+
+
+                let divInformation = document.createElement('div')
+                divInformation.setAttribute("class", "company-information")
+
                 let h2 = document.createElement('h2')
                 h2.innerHTML = element['name']
+                divInformation.append(h2)
+
+
                 let p = document.createElement('p')
                 p.setAttribute("class", "idCompany")
                 p.innerHTML = 'ID ' +  element['companyId']
+                divInformation.append(p)
 
 
                 let employees = document.createElement('p')
                 employees.setAttribute("class", "employees")
                 employees.innerHTML = "Employees: "
+                divInformation.append(employees)
 
                 let count = document.createElement('p')
                 count.setAttribute("class", "count")
                 count.setAttribute("id", "count" + element['companyId'])
                 count.innerHTML = 0
+                divInformation.append(count)
 
                 let countEmployee = document.createElement('input')
                 countEmployee.setAttribute("type", "number");
                 countEmployee.setAttribute("id", "countEmployeed" + element['companyId']);
                 countEmployee.value = 0;
+                divInformation.append(countEmployee)
 
-
-                article.append(h2)
-                article.append(employees)
-                article.append(count)
-                article.append(countEmployee)
-                article.append(p)
+                /*
+                div.append(h2)
+                div.append(employees)
+                div.append(count)
+                div.append(countEmployee)
+                div.append(p)
+                */
+               
+                div.append(divInformation)
                 
-                companiesList.append(article)
+                companiesList.append(div)
             });
         })
         .catch((error)=>{
@@ -138,45 +153,42 @@ async function showEmployeeList(){
             response.forEach(employee => {
                 let company = document.getElementById(employee["companyId"])                
 
-                let div = document.createElement('div')
-                div.setAttribute("class", "employee")
-                div.setAttribute("class", "company" + employee["companyId"])
-                div.setAttribute("class", "info-employee")
+                let section = document.createElement('section')
+                section.setAttribute("class", "employee")
+                section.setAttribute("class", "company" + employee["companyId"])
+                section.setAttribute("class", "info-employee")
 
                 let pCompanyId = document.createElement('p')
                 pCompanyId.innerHTML = "ID company: " + employee["companyId"]
-                div.append(pCompanyId)
+                section.append(pCompanyId)
 
                 let pEmployeeId = document.createElement('p')
                 pEmployeeId.innerHTML = "ID employee: " + employee["employeeId"]
-                div.append(pEmployeeId)                
+                section.append(pEmployeeId)                
                 
                 let pFirstName = document.createElement('p')
                 pFirstName.innerHTML = "Name: " + employee["firstName"]
-                div.append(pFirstName)
+                section.append(pFirstName)
                 
                 let pLastName = document.createElement('p')
                 pLastName.innerHTML = "Lastname: " + employee["lastName"]
-                div.append(pLastName)
+                section.append(pLastName)
                 
                 let pEmail = document.createElement('p')
                 pEmail.innerHTML = "Email: " + employee["email"]
-                div.append(pEmail)
+                section.append(pEmail)
                 
                 let countEmployee = document.getElementById("countEmployeed" + employee['companyId'])
                 countEmployee.value = parseInt(countEmployee.value) + 1;
 
                 let count = document.getElementById("count" + employee['companyId'])     
                 if(company.id == employee["companyId"]){
-
                     count.innerHTML = parseInt(count.innerHTML) + 1
-                    
                 }
-
                 
                 //console.log("Count ---> " + countEmployee);
 
-                company.append(div)
+                company.append(section)
             });
         })
         .catch((error)=>{

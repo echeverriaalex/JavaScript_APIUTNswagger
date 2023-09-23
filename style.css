@@ -1,15 +1,50 @@
+*{
+    padding: 0px;
+    margin: 0px;
+}
+
+header{
+    text-align: center;
+    margin: 20px 20px;
+    color: black;
+}
+
+header p{
+    margin: 20px 20px;
+    color: black;
+    width: 70%;
+    margin: auto;
+}
+
 #companiesList{
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    
+    background: rebeccapurple;
+    width: 90%;
+    margin: auto;
 }
 
-article{
+
+div{
     background: rgb(19, 165, 250);
-    width: 300px;
-    margin: 20px 20px;
+    width: 100%;
+    
     border-radius: 10px;
+    margin: 20px 20px;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 20px 5px;
+    justify-content: center;
+}
+
+
+
+.company-information{
+    width: 100%;
+    display: block;
 }
 
 h2{
@@ -29,10 +64,12 @@ h2{
     font-weight: bolder;
 }
 
+
 .info-employee{
-    background: rgb(9, 142, 231);
-    margin: 20px 20px;
-    height: 150px;
+    width: 220px;
+    background: rgb(9, 231, 39);
+    margin: 5px 10px;
+    height: 130px;
     padding: 10px 10px;
     border-radius: 20px;
 }
