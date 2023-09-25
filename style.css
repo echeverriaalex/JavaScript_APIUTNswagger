@@ -20,14 +20,13 @@ header p{
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    background: rebeccapurple;
+    background: #3D1523;
     width: 90%;
     margin: auto;
 }
 
-
 div{
-    background: rgb(19, 165, 250);
+    background: #642239;
     width: 100%;
     
     border-radius: 10px;
@@ -39,8 +38,6 @@ div{
     padding: 20px 5px;
     justify-content: center;
 }
-
-
 
 .company-information{
     width: 100%;
@@ -55,26 +52,24 @@ h2{
 
 .idCompany{
     display: block;
-    background: rgb(84, 126, 241);
+    background: #3D1523;
     font-size: 20px;
     padding: 20px 10px;
     color: black;
     text-align: center;
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     font-weight: bolder;
+    border-radius: 10px;
 }
-
 
 .info-employee{
     width: 220px;
-    background: rgb(9, 231, 39);
+    background: #8B2E4E;
     margin: 5px 10px;
     height: 130px;
     padding: 10px 10px;
     border-radius: 20px;
 }
-
-
 
 p{
     display: block;
