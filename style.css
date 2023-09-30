@@ -48,11 +48,12 @@ h2{
     display: block;
     font-size: 30px;
     text-align: center;
+    letter-spacing:  30px;
 }
 
 .idCompany{
     display: block;
-    background: #3D1523;
+    background: #4e1328;
     font-size: 20px;
     padding: 20px 10px;
     color: black;

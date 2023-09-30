@@ -45,65 +45,63 @@ let getCompanyList = function(url){
     })
 }
 
+function createCompany(company){
+    let div = document.createElement('div')
+    div.setAttribute("id", company['companyId'])
 
-let companiesList = document.getElementById('companiesList');
+    let divInformation = document.createElement('div')
+    divInformation.setAttribute("class", "company-information")
+
+    let h2 = document.createElement('h2')
+    h2.innerHTML = company['name']
+    divInformation.append(h2)
+
+    let p = document.createElement('p')
+    p.setAttribute("class", "idCompany")
+    p.innerHTML = 'ID ' +  company['companyId']
+    divInformation.append(p)
+
+    let employees = document.createElement('p')
+    employees.setAttribute("class", "employees")
+    employees.innerHTML = "Employees: "
+    divInformation.append(employees)
+
+    let count = document.createElement('p')
+    count.setAttribute("class", "count")
+    count.setAttribute("id", "count" + company['companyId'])
+    count.innerHTML = 0
+    divInformation.append(count)
+
+    let countEmployee = document.createElement('input')
+    countEmployee.setAttribute("type", "number");
+    countEmployee.setAttribute("id", "countEmployeed" + company['companyId']);
+    countEmployee.value = 0;
+    divInformation.append(countEmployee)
+
+    /*
+    div.append(h2)
+    div.append(employees)
+    div.append(count)
+    div.append(countEmployee)
+    div.append(p)
+    */
+    
+    div.append(divInformation)
+    return div
+}
 
 // PREGUNTAR SI ES UNA BUENA PRACTICA DE PROGRAMACION HACER ESTO
 // Encierro toda la funcion getCompanyList y su procesamiento 
 // de la promise en otra funcion para simplificar el codigo
 // cada vez que quiera traer y mostrar las empresas
 async function showListCompany(){
+    let companiesList = document.getElementById('companiesList');
     await getCompanyList(urlCompany)
         .then((response)=>{
-            //console.log(response);
-            response.forEach(element => {
-                
-                let div = document.createElement('div')
-                div.setAttribute("id", element['companyId'])
-
-
-                let divInformation = document.createElement('div')
-                divInformation.setAttribute("class", "company-information")
-
-                let h2 = document.createElement('h2')
-                h2.innerHTML = element['name']
-                divInformation.append(h2)
-
-
-                let p = document.createElement('p')
-                p.setAttribute("class", "idCompany")
-                p.innerHTML = 'ID ' +  element['companyId']
-                divInformation.append(p)
-
-
-                let employees = document.createElement('p')
-                employees.setAttribute("class", "employees")
-                employees.innerHTML = "Employees: "
-                divInformation.append(employees)
-
-                let count = document.createElement('p')
-                count.setAttribute("class", "count")
-                count.setAttribute("id", "count" + element['companyId'])
-                count.innerHTML = 0
-                divInformation.append(count)
-
-                let countEmployee = document.createElement('input')
-                countEmployee.setAttribute("type", "number");
-                countEmployee.setAttribute("id", "countEmployeed" + element['companyId']);
-                countEmployee.value = 0;
-                divInformation.append(countEmployee)
-
-                /*
-                div.append(h2)
-                div.append(employees)
-                div.append(count)
-                div.append(countEmployee)
-                div.append(p)
-                */
-               
-                div.append(divInformation)
-                
-                companiesList.append(div)
+            console.log("Number of companies: " + response.length);
+            response.forEach(company => {
+                let newCompany = createCompany(company)
+                companiesList.append(newCompany)
             });
         })
         .catch((error)=>{
@@ -113,11 +111,6 @@ async function showListCompany(){
             companiesList.append(h2)
         })
 }
-
-
-
-
-// ---------------------------------------------------------------------------------------
 
 
 const urlEmployee = 'https://utn-lubnan-api-1.herokuapp.com/api/Employee'
@@ -142,6 +135,44 @@ let getEmployeeList = function(url){
     })
 }
 
+function createEmployee(employee){
+    let section = document.createElement('section')
+    section.setAttribute("class", "employee")
+    section.setAttribute("class", "company" + employee["companyId"])
+    section.setAttribute("class", "info-employee")
+
+    let pCompanyId = document.createElement('p')
+    pCompanyId.innerHTML = "ID company: " + employee["companyId"]
+    section.append(pCompanyId)
+
+    let pEmployeeId = document.createElement('p')
+    pEmployeeId.innerHTML = "ID employee: " + employee["employeeId"]
+    section.append(pEmployeeId)                
+    
+    let pFirstName = document.createElement('p')
+    pFirstName.innerHTML = "Name: " + employee["firstName"]
+    section.append(pFirstName)
+    
+    let pLastName = document.createElement('p')
+    pLastName.innerHTML = "Lastname: " + employee["lastName"]
+    section.append(pLastName)
+    
+    let pEmail = document.createElement('p')
+    pEmail.innerHTML = "Email: " + employee["email"]
+    section.append(pEmail)
+    
+    let countEmployee = document.getElementById("countEmployeed" + employee['companyId'])
+    countEmployee.value = parseInt(countEmployee.value) + 1;
+
+    let count = document.getElementById("count" + employee['companyId'])     
+    if(company.id == employee["companyId"]){
+        count.innerHTML = parseInt(count.innerHTML) + 1
+    }
+    
+    //console.log("Count ---> " + countEmployee);
+    return section
+}
+
 // PREGUNTAR SI ES UNA BUENA PRACTICA DE PROGRAMACION HACER ESTO
 // Encierro toda la funcion showEmployeeList y su procesamiento 
 // de la promise en otra funcion para simplificar el codigo
@@ -149,46 +180,11 @@ let getEmployeeList = function(url){
 async function showEmployeeList(){
     await getEmployeeList(urlEmployee)
         .then((response)=>{
-            //console.log(response);
+            console.log("Number of employee: " + response.length);
             response.forEach(employee => {
-                let company = document.getElementById(employee["companyId"])                
-
-                let section = document.createElement('section')
-                section.setAttribute("class", "employee")
-                section.setAttribute("class", "company" + employee["companyId"])
-                section.setAttribute("class", "info-employee")
-
-                let pCompanyId = document.createElement('p')
-                pCompanyId.innerHTML = "ID company: " + employee["companyId"]
-                section.append(pCompanyId)
-
-                let pEmployeeId = document.createElement('p')
-                pEmployeeId.innerHTML = "ID employee: " + employee["employeeId"]
-                section.append(pEmployeeId)                
-                
-                let pFirstName = document.createElement('p')
-                pFirstName.innerHTML = "Name: " + employee["firstName"]
-                section.append(pFirstName)
-                
-                let pLastName = document.createElement('p')
-                pLastName.innerHTML = "Lastname: " + employee["lastName"]
-                section.append(pLastName)
-                
-                let pEmail = document.createElement('p')
-                pEmail.innerHTML = "Email: " + employee["email"]
-                section.append(pEmail)
-                
-                let countEmployee = document.getElementById("countEmployeed" + employee['companyId'])
-                countEmployee.value = parseInt(countEmployee.value) + 1;
-
-                let count = document.getElementById("count" + employee['companyId'])     
-                if(company.id == employee["companyId"]){
-                    count.innerHTML = parseInt(count.innerHTML) + 1
-                }
-                
-                //console.log("Count ---> " + countEmployee);
-
-                company.append(section)
+                company = document.getElementById(employee["companyId"])                
+                let newEmployee = createEmployee(employee)
+                company.append(newEmployee)
             });
         })
         .catch((error)=>{
@@ -198,8 +194,6 @@ async function showEmployeeList(){
             companiesList.append(h2)
         })
 }
-
-
 
 async function showCompanyWithEmployee(){
     await showListCompany();
@@ -211,7 +205,7 @@ async function showCompanyWithEmployee(){
 
 // ------------------------------------------------------------------------------------------------------
 
-let postNewEmployee = function(newEmplooyee, url){
+let postNewEmployee = function(newEmployee, url){
     return new Promise(function(resolve, reject){
         var request = new XMLHttpRequest()
         request.open('POST', url)
@@ -228,13 +222,13 @@ let postNewEmployee = function(newEmplooyee, url){
         request.onerror = function(){
             reject(Error('Error: network'))
         }
-        request.send(JSON.stringify(newEmplooyee))
+        request.send(JSON.stringify(newEmployee))
     })
 }
 
 
 // creo nuevos objetos empleados para enviarlos a la API
-let newEmplooyee1 = {
+let newEmployee1 = {
     "employeeId": 19998, // este en este caso es opcional
     "companyId": 1,
     "firstName": "Alex",
@@ -242,7 +236,7 @@ let newEmplooyee1 = {
     "email": "alexnahuelecheverria@gmail.com"
 }
 
-let newEmplooyee2 = {
+let newEmployee2 = {
     "employeeId": 19998, // este en este caso es opcional
     "companyId": 5,
     "firstName": "Pepe",
@@ -250,7 +244,7 @@ let newEmplooyee2 = {
     "email": "racingclubavellaneda@gmail.com"
 }
 
-let newEmplooyee3 = {
+let newEmployee3 = {
     "employeeId": 19998, // este en este caso es opcional
     "companyId": 7,
     "firstName": "Leonardo",
@@ -259,11 +253,11 @@ let newEmplooyee3 = {
 }
 
 
-async function registerNewEmployeeAsync(newEmplooyee){
+async function registerNewEmployeeAsync(newEmployee){
     // mando por post a crear un nuevo empleado
-    await postNewEmployee(newEmplooyee, urlEmployee)
+    await postNewEmployee(newEmployee, urlEmployee)
         .then((response)=>{
-            console.log(newEmplooyee.firstName + " was registered asynchronously");
+            console.log(newEmployee.firstName + " was registered asynchronously");
             console.log(response);
         })
         .catch((error)=>{
@@ -280,7 +274,7 @@ Uncaught SyntaxError: await is only valid in async functions and
 the top level bodies of modules (at app.js:206:1)
 yo ponia asi:
 
-await registerNewEmployee(newEmplooyee1);
+await registerNewEmployee(newEmployee1);
 
 pero dentro de esa funcion no ponia await
 
@@ -291,14 +285,14 @@ que poner await
 
 console.log("\n ---> Vamos a probar el orden con Async y Await\n\n");
 
-registerNewEmployeeAsync(newEmplooyee1);
-console.log(newEmplooyee1.firstName + " was sent to Asyn");
+registerNewEmployeeAsync(newEmployee1);
+console.log(newEmployee1.firstName + " was sent to Asyn");
 
-registerNewEmployeeAsync(newEmplooyee2);
-console.log(newEmplooyee2.firstName + " was sent to Asyn");
+registerNewEmployeeAsync(newEmployee2);
+console.log(newEmployee2.firstName + " was sent to Asyn");
 
-registerNewEmployeeAsync(newEmplooyee3);
-console.log(newEmplooyee3.firstName + " was sent to Asyn");
+registerNewEmployeeAsync(newEmployee3);
+console.log(newEmployee3.firstName + " was sent to Asyn");
 
 console.log("\n ---- Fin de la prueba en orden con Async y Await\n\n\n");
 
@@ -308,7 +302,7 @@ console.log("\n ---- Fin de la prueba en orden con Async y Await\n\n\n");
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 
-let newEmplooyee4 = {
+let newEmployee4 = {
     "employeeId": 19998, // este en este caso es opcional
     "companyId": 9,
     "firstName": "Lionel",
@@ -316,7 +310,7 @@ let newEmplooyee4 = {
     "email": "lio_10_messi@icloud.com"
 }
 
-let newEmplooyee5 = {
+let newEmployee5 = {
     "employeeId": 19998, // este en este caso es opcional
     "companyId": 3,
     "firstName": "Fideo",
@@ -324,7 +318,7 @@ let newEmplooyee5 = {
     "email": "fideo_en_su_salsa@icloud.com"
 }
 
-let newEmplooyee6 = {
+let newEmployee6 = {
     "employeeId": 19998, // este en este caso es opcional
     "companyId": 6,
     "firstName": "Diego",
@@ -333,11 +327,11 @@ let newEmplooyee6 = {
 }
 
 
-function registerNewEmployee(newEmplooyee){
+function registerNewEmployee(newEmployee){
     // mando por post a crear un nuevo empleado
-    postNewEmployee(newEmplooyee, urlEmployee)
+    postNewEmployee(newEmployee, urlEmployee)
         .then((response)=>{
-            console.log(newEmplooyee.firstName + " was registered.");
+            console.log(newEmployee.firstName + " was registered.");
             console.log(response);
         })
         .catch((error)=>{
@@ -349,14 +343,14 @@ function registerNewEmployee(newEmplooyee){
 }
 
 console.log("\n $---> Vamos a probar el orden SIN Async y Await");
-registerNewEmployee(newEmplooyee4);
-console.log(newEmplooyee4.firstName + " was sent");
+registerNewEmployee(newEmployee4);
+console.log(newEmployee4.firstName + " was sent");
 
-registerNewEmployee(newEmplooyee5);
-console.log(newEmplooyee5.firstName + " was sent");
+registerNewEmployee(newEmployee5);
+console.log(newEmployee5.firstName + " was sent");
 
-registerNewEmployee(newEmplooyee6);
-console.log(newEmplooyee6.firstName + " was sent");
+registerNewEmployee(newEmployee6);
+console.log(newEmployee6.firstName + " was sent");
 
 console.log("\n $---> Fin de la prueba en orden SIN Async y Await\n\n\n");
 
@@ -404,7 +398,7 @@ function deleteEmployee(idEmployee){
     // mando por post a crear un nuevo empleado
     deleteEmployeeById("https://utn-lubnan-api-1.herokuapp.com/api/Employee/" + idEmployee)
         .then((response)=>{
-            console.log("Employee deleted.");
+            console.log("Employee deleted." + idEmployee);
             console.log(response);
         })
         .catch((error)=>{
@@ -415,6 +409,10 @@ function deleteEmployee(idEmployee){
         })
 }
 
-deleteEmployee(733)
+//showCompanyWithEmployee()
+
+console.log('voy a borrar el 733 y muestro');
+
+deleteEmployee(1)
 
 showCompanyWithEmployee()
